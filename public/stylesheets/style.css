@@ -1,0 +1,30 @@
+#chat-log {
+	width: 500px;
+	border: 1px solid #000000;
+	list-style-type: none;
+	overflow-y: scroll;
+}
+
+li {
+	width: 100px;
+	margin-bottom: 10px;
+}
+
+.msg-from-me {
+	/* transform: translateX(100px); */
+}
+
+.msg-from-others {
+	/* position: relative; */
+}
+
+.msg-user {
+	/* position: absolute; */
+	font-size: smaller;
+	font-style: italic;
+}
+
+.msg-content {
+	/* position: absolute; */
+	/* top: 16px; */
+}

@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Express</title>
+		<!-- <link rel="stylesheet" href="/stylesheets/style.css" /> -->
+	</head>
+
+	<body>
+		<h1>THE CHAT FOR COOL KIDS</h1>
+		<h2>Welcome to the chatroom</h2>
+		<ul id="chat-log"></ul>
+
+		<form id="chat-form" method="POST">
+			<input type="text" name="msg" id="chat-input" required />
+			<input type="submit" value="Send" />
+		</form>
+	</body>
+	<script src="socket.io/socket.io.js"></script>
+	<script src="javascripts/main.js"></script>
+</html>
