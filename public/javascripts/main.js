@@ -1,3 +1,9 @@
+import { youHaveJoined } from './socketsOn/youHaveJoined.js';
+import { otherUserHasJoined } from './socketsOn/otherUserHasJoined.js';
+import { otherUserHasLeft } from './socketsOn/otherUserHasLeft.js';
+import { serverDistributeMsgToAllUsers } from './socketsOn/serverDistributeMsgToAllUsers.js';
+import { serverSendMeBackMyMsg } from './socketsOn/serverSendMeBackMyMsg.js';
+
 const socket = io();
 console.log(socket);
 
@@ -6,6 +12,7 @@ let thisClient;
 const chatLog = document.getElementById('chat-log');
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
+const yourName = document.getElementById('your-name');
 
 chatForm.addEventListener('submit', (e) => {
 	e.preventDefault();
@@ -18,56 +25,16 @@ chatForm.addEventListener('submit', (e) => {
 });
 
 // Feedback that you have joined the chat
-socket.on('you have joined', (newUser) => {
-	chatLog.insertAdjacentHTML(
-		'beforeend',
-		`<li>Welcome! You are user: ${newUser.id.slice(0, 3)}</li>`
-	);
-	thisClient = newUser.id.slice(0, 3);
-});
+youHaveJoined(socket, chatLog, thisClient, yourName);
 
 // Listen for other users joining
-socket.on('user has joined', (newUser) => {
-	chatLog.insertAdjacentHTML(
-		'beforeend',
-		`<li>${newUser.id.slice(0, 3)} has joined</li>`
-	);
-});
+otherUserHasJoined(socket, chatLog);
 
 // Listen for other users leaving
-socket.on('user has left', (newUser) => {
-	chatLog.insertAdjacentHTML(
-		'beforeend',
-		`<li>${newUser.id.slice(0, 3)} has left</li>`
-	);
-});
+otherUserHasLeft(socket, chatLog);
 
-socket.on('server distribute msg to all users', (msg) => {
-	chatLog.insertAdjacentHTML(
-		'beforeend',
-		`<li class="msg-from-others"><span class="msg-user">${msg.user} says:</span><span class="msg-content">${msg.content}</span></li>`
-	);
+// Listen for messages from others
+serverDistributeMsgToAllUsers(socket, chatLog);
 
-	let allMsges = document.querySelectorAll('.msg-from-others');
-	console.log('allMsges from others: ', allMsges);
-
-	let latestMsg = allMsges[allMsges.length - 1];
-	console.log('latestMsg: ', latestMsg);
-
-	latestMsg.scrollIntoView();
-});
-
-socket.on('server send me back my msg', (msg) => {
-	chatLog.insertAdjacentHTML(
-		'beforeend',
-		`<li class="msg-from-me">${msg.content}</li>`
-	);
-
-	let allMsges = document.querySelectorAll('.msg-from-me');
-	console.log('allMsges from myself: ', allMsges);
-
-	let latestMsg = allMsges[allMsges.length - 1];
-	console.log('latestMsg: ', latestMsg);
-
-	latestMsg.scrollIntoView();
-});
+// Listen for messages from me
+serverSendMeBackMyMsg(socket, chatLog);

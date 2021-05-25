@@ -19,18 +19,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+let users = [];
+
 let totalClients = 0;
 io.on('connection', (socket) => {
 	// Create new user
-	const newUser = {
-		id: socket.id,
-		name: 'Guest ' + totalClients,
-	};
 
 	/* ------------ USER CONNECTS ---------- */
 	console.log('New client connected: ', socket.id);
 	totalClients++;
 	console.log('Total clients connected: ', totalClients);
+
+	const newUser = {
+		id: socket.id,
+		name: 'Guest ' + totalClients,
+	};
+
+	users.push(newUser);
+	console.log(users);
 
 	/* ------------ BROADCAST NEW USER TO ALL ---------- */
 	socket.broadcast.emit('user has joined', newUser);
@@ -43,6 +49,11 @@ io.on('connection', (socket) => {
 		console.log('Client left: ', socket.id);
 		totalClients--;
 		console.log('Total clients connected: ', totalClients);
+
+		console.log(users);
+		users = users.filter((userDetails) => userDetails.id != socket.id);
+		console.log(users);
+
 		socket.broadcast.emit('user has left', newUser);
 	});
 
@@ -51,14 +62,14 @@ io.on('connection', (socket) => {
 		socket.broadcast.emit('server distribute msg to all users', msgInfo);
 		socket.emit('server send me back my msg', msgInfo);
 	});
+
+	/* ------------ A user changes their name ---------- */
+	socket.on('user change their name', (userInfo) => {
+		const { newName, userId } = userInfo;
+
+		users.find((user) => user.id == userId).name = newName;
+	});
 });
-
-// app.post('/chatmsg', (req, res) => {
-// 	console.log(req.body);
-// 	// res.send(req.body);
-
-// 	io.emit('msg from user', req.body.msg);
-// });
 
 module.exports = {
 	app,

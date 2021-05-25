@@ -1,12 +1,18 @@
 <html>
 	<head>
 		<title>Express</title>
-		<!-- <link rel="stylesheet" href="/stylesheets/style.css" /> -->
+		<link rel="stylesheet" href="/stylesheets/style.css" />
 	</head>
 
 	<body>
 		<h1>THE CHAT FOR COOL KIDS</h1>
-		<h2>Welcome to the chatroom</h2>
+		<h2>
+			Welcome to the chatroom
+			<form id="formChangeName" onSubmit="event.preventDefault()">
+				<input type="text" id="your-name" name="newName" />
+				<input type="submit" value="Change name" />
+			</form>
+		</h2>
 		<ul id="chat-log"></ul>
 
 		<form id="chat-form" method="POST">
@@ -15,5 +21,5 @@
 		</form>
 	</body>
 	<script src="socket.io/socket.io.js"></script>
-	<script src="javascripts/main.js"></script>
+	<script type="module" src="javascripts/main.js"></script>
 </html>
