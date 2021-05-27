@@ -1,3 +1,5 @@
+import { welcomeUserInChat } from './modules/welcomeMsgFromServer.js';
+
 import { otherUserHasJoined } from './socketsOn/otherUserHasJoined.js';
 import { otherUserHasLeft } from './socketsOn/otherUserHasLeft.js';
 import { serverDistributeMsgToAllUsers } from './socketsOn/serverDistributeMsgToAllUsers.js';
@@ -15,10 +17,8 @@ const yourNameInput = document.getElementById('your-name');
 
 // Always receieve from server when you enter the chat
 socket.on('you have joined', (newUser) => {
-	chatLog.insertAdjacentHTML(
-		'beforeend',
-		`<li>Welcome! You are user: ${newUser.id.slice(0, 3)}</li>`
-	);
+	welcomeUserInChat(newUser, chatLog);
+
 	thisClient = newUser.id.slice(0, 4);
 
 	console.log('thisClient has joined');
@@ -41,8 +41,6 @@ chatForm.addEventListener('submit', (e) => {
 });
 
 /* --------- IO LISTENERS --------- */
-// Feedback that you have joined the chat
-youHaveJoined(socket, chatLog, thisClient, yourNameInput);
 
 // Listen for other users joining
 otherUserHasJoined(socket, chatLog);
