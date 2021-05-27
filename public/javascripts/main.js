@@ -21,9 +21,6 @@ const chatInput = document.getElementById('chat-input');
 const yourNameForm = document.getElementById('form-change-name');
 const yourNameInput = document.getElementById('your-name');
 
-// Get chatlog from server
-socket.emit('user request chat log');
-
 // Fill chat history with chat log
 socket.on('server sends serverChatLog', (chatHistory) => {
 	for (let msg of chatHistory) {
@@ -36,14 +33,33 @@ socket.on('server sends serverChatLog', (chatHistory) => {
 });
 
 // Always receieve from server when you enter the chat
-socket.on('you have joined', (newUser) => {
-	printWelcomeMsgFromServer(newUser, chatLog);
+socket.on('you have joined', (user) => {
+	let cookie = localStorage.getItem('cookie');
+	if (cookie == null) {
+		localStorage.setItem('cookie', JSON.stringify(user.cookie));
+		localStorage.setItem('screenName', JSON.stringify(thisClientLocalName));
+	} else {
+		socket.emit('user have visited before', {
+			prevCookie: JSON.parse(localStorage.getItem('cookie')),
+			currentId: socket.id,
+			screenName: JSON.parse(localStorage.getItem('screenName')),
+		});
+		user.screenName = JSON.parse(localStorage.getItem('screenName'));
+	}
+
+	console.log('user: ', user);
+	console.log('cookie: ', cookie);
+	printWelcomeMsgFromServer(user, chatLog);
 
 	// Set localname of client to first 4 chars of socket.id
-	thisClientLocalName = newUser.screenName;
+	thisClientLocalName =
+		JSON.parse(localStorage.getItem('screenName')) || user.screenName;
 
 	// Add value to inputfield
-	yourNameInput.value = thisClientLocalName;
+	yourNameInput.value =
+		JSON.parse(localStorage.getItem('screenName')) || thisClientLocalName;
+
+	socket.emit('user joins', user);
 });
 
 // Send a msg to server
@@ -72,6 +88,7 @@ yourNameForm.addEventListener('submit', (e) => {
 
 	// Change my name locally
 	thisClientLocalName = newName;
+	localStorage.setItem('screenName', JSON.stringify(thisClientLocalName));
 
 	// Local feedback that the name is changed
 	printMyNameChanged(newName, chatLog);

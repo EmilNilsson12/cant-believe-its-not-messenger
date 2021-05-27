@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
 	// Create new user
 	const newUser = {
 		id: socket.id,
-		name: 'Guest ' + totalClientsEver,
+		cookie: 'Guest_' + socket.id,
 		screenName: socket.id.slice(0, 4),
 	};
 
@@ -41,8 +41,17 @@ io.on('connection', (socket) => {
 	totalClientsEver++;
 	console.log('Total clients connected: ', totalClients);
 
+	/* ------------ CONFIGURE RETURN USER ---------- */
+	socket.on('user have visited before', (returnUser) => {
+		// Update array of visitors to match the users local settings
+		users.find((user) => user.id == returnUser.currentId).screenName =
+			returnUser.screenName;
+	});
+
 	/* ------------ BROADCAST NEW USER TO ALL ---------- */
-	socket.broadcast.emit('user has joined', newUser);
+	socket.on('user joins', (user) => {
+		socket.broadcast.emit('user has joined', user);
+	});
 
 	/* ------------ WELCOME NEW USER TO SELF ---------- */
 	socket.emit('you have joined', newUser);
@@ -92,9 +101,8 @@ io.on('connection', (socket) => {
 		// socket.emit('you have changed your name', newName);
 	});
 
-	socket.on('user request chat log', () => {
-		socket.emit('server sends serverChatLog', serverChatLog);
-	});
+	// SEND CHAT HISTORY TO NEWLY CONNECTED USER
+	socket.emit('server sends serverChatLog', serverChatLog);
 });
 
 module.exports = {
