@@ -70,7 +70,22 @@ io.on('connection', (socket) => {
 	socket.on('user change their name', (userInfo) => {
 		const { newName, userId } = userInfo;
 
-		users.find((user) => user.id == userId).name = newName;
+		console.log('User ' + userId + ' wants a new name');
+
+		// Save old name for broadcasting
+		let oldName = users.find((user) => user.id == userId).screenName;
+
+		// Overwrite old name in users array
+		users.find((user) => user.id == userId).screenName = newName;
+
+		// Emit the change to all other users
+		socket.broadcast.emit('another user has changed their name', {
+			oldName,
+			newName,
+		});
+
+		// // Send feedback to the user
+		// socket.emit('you have changed your name', newName);
 	});
 });
 
