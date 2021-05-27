@@ -10,6 +10,7 @@ import { serverSendMeBackMyMsg } from './socketsOn/serverSendMeBackMyMsg.js';
 import { serverAnnounceNameChange } from './socketsOn/serverAnnounceNameChange.js';
 
 import { sanitize } from './utils/sanitizeInput.js';
+import { scrollLatestMsgIntoView } from './utils/scrollLatestMsgIntoView.js';
 
 const socket = io();
 console.log(socket);
@@ -32,6 +33,7 @@ socket.on('server sends serverChatLog', (chatHistory) => {
 			printMsgFromOtherUser(msg, chatLog);
 		}
 	}
+	scrollLatestMsgIntoView();
 });
 
 // Always receieve from server when you enter the chat

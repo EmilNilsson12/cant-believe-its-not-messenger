@@ -1,14 +1,9 @@
 import { printMsgFromMe } from '../modules/chatMsgs/printMsgFromMe.js';
+import { scrollLatestMsgIntoView } from '../utils/scrollLatestMsgIntoView.js';
 function serverSendMeBackMyMsg(socket, chatLog) {
 	socket.on('server send me back my msg', (msg) => {
 		printMsgFromMe(msg, chatLog);
-		let allMsges = document.querySelectorAll('.msg-from-me');
-		console.log('allMsges from myself: ', allMsges);
-
-		let latestMsg = allMsges[allMsges.length - 1];
-		console.log('latestMsg: ', latestMsg);
-
-		latestMsg.scrollIntoView();
+		scrollLatestMsgIntoView();
 	});
 }
 
