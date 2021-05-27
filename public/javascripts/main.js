@@ -9,6 +9,8 @@ import { serverDistributeMsgToAllUsers } from './socketsOn/serverDistributeMsgTo
 import { serverSendMeBackMyMsg } from './socketsOn/serverSendMeBackMyMsg.js';
 import { serverAnnounceNameChange } from './socketsOn/serverAnnounceNameChange.js';
 
+import { sanitize } from './utils/sanitizeInput.js';
+
 const socket = io();
 console.log(socket);
 
@@ -69,7 +71,9 @@ chatForm.addEventListener('submit', (e) => {
 	let msg = chatInput.value;
 
 	console.log('thisClientLocalName: ', thisClientLocalName);
-	console.log('msg: ', msg);
+
+	// Prevents user from writing HTML as msg - XSS
+	msg = sanitize(msg);
 
 	socket.emit('user send msg to server', {
 		content: msg,
