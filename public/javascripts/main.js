@@ -26,8 +26,7 @@ socket.emit('user request chat log');
 
 // Fill chat history with chat log
 socket.on('server sends serverChatLog', (chatHistory) => {
-	console.table(chatHistory);
-	for (let msg in chatHistory) {
+	for (let msg of chatHistory) {
 		if (msg.user == thisClientLocalName) {
 			printMsgFromMe(msg, chatLog);
 		} else {
