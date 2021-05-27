@@ -22,17 +22,19 @@ app.use('/users', usersRouter);
 let users = [];
 
 let totalClients = 0;
+let totalClientsEver = 0;
 io.on('connection', (socket) => {
 	// Create new user
 
 	/* ------------ USER CONNECTS ---------- */
 	console.log('New client connected: ', socket.id);
 	totalClients++;
+	totalClientsEver++;
 	console.log('Total clients connected: ', totalClients);
 
 	const newUser = {
 		id: socket.id,
-		name: 'Guest ' + totalClients,
+		name: 'Guest ' + totalClientsEver,
 	};
 
 	users.push(newUser);
