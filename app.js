@@ -20,18 +20,12 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 let users = [];
+let chatlog = [];
 
 let totalClients = 0;
 let totalClientsEver = 0;
 io.on('connection', (socket) => {
 	// Create new user
-
-	/* ------------ USER CONNECTS ---------- */
-	console.log('New client connected: ', socket.id);
-	totalClients++;
-	totalClientsEver++;
-	console.log('Total clients connected: ', totalClients);
-
 	const newUser = {
 		id: socket.id,
 		name: 'Guest ' + totalClientsEver,
@@ -41,10 +35,16 @@ io.on('connection', (socket) => {
 	users.push(newUser);
 	console.log(users);
 
+	/* ------------ USER CONNECTS ---------- */
+	console.log('New client connected: ', socket.id);
+	totalClients++;
+	totalClientsEver++;
+	console.log('Total clients connected: ', totalClients);
+
 	/* ------------ BROADCAST NEW USER TO ALL ---------- */
 	socket.broadcast.emit('user has joined', newUser);
 
-	/* ------------ WELCOME NEW USER TO ALL ---------- */
+	/* ------------ WELCOME NEW USER TO SELF ---------- */
 	socket.emit('you have joined', newUser);
 
 	/* ------------ USER DISCONNECTS ---------- */
@@ -62,6 +62,9 @@ io.on('connection', (socket) => {
 
 	/* ------------ A USER SENDS A CHAT-MSG ---------- */
 	socket.on('user send msg to server', (msgInfo) => {
+		// Save msginfo in chatlog
+		chatlog.push(msgInfo);
+
 		socket.broadcast.emit('server distribute msg to all users', msgInfo);
 		socket.emit('server send me back my msg', msgInfo);
 	});
