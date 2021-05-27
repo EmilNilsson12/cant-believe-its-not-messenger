@@ -1,9 +1,7 @@
+import { printUserJoinedMsg } from '../modules/chatMsgs/printUserJoinedMsg.js';
 function otherUserHasJoined(socket, chatLog) {
 	socket.on('user has joined', (newUser) => {
-		chatLog.insertAdjacentHTML(
-			'beforeend',
-			`<li>${newUser.screenName} has joined</li>`
-		);
+		printUserJoinedMsg(newUser, chatLog);
 	});
 }
 

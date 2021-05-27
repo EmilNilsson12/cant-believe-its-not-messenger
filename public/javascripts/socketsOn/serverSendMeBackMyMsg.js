@@ -1,10 +1,7 @@
+import { printMsgFromMe } from '../modules/chatMsgs/printMsgFromMe.js';
 function serverSendMeBackMyMsg(socket, chatLog) {
 	socket.on('server send me back my msg', (msg) => {
-		chatLog.insertAdjacentHTML(
-			'beforeend',
-			`<li class="msg-from-me">${msg.content}</li>`
-		);
-
+		printMsgFromMe(msg, chatLog);
 		let allMsges = document.querySelectorAll('.msg-from-me');
 		console.log('allMsges from myself: ', allMsges);
 

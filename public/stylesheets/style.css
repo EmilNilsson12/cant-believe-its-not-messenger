@@ -9,15 +9,30 @@
 li {
 	width: 100%;
 	margin-bottom: 10px;
+	padding: 5px;
 }
 
 .msg-from-me {
 	/* float: right; */
 	text-align: right;
+
+	color: white;
+	background-color: blue;
+}
+
+.msg-from-me {
+	border-radius: 10px;
+}
+
+.msg-from-me ~ .msg-from-me {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
 .msg-from-others-li {
 	text-align: left;
+	color: white;
+	background-color: purple;
 }
 
 .msg-from-others-username {

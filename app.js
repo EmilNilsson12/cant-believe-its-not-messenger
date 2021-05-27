@@ -20,7 +20,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 let users = [];
-let chatlog = [];
+let serverChatLog = [];
 
 let totalClients = 0;
 let totalClientsEver = 0;
@@ -62,8 +62,9 @@ io.on('connection', (socket) => {
 
 	/* ------------ A USER SENDS A CHAT-MSG ---------- */
 	socket.on('user send msg to server', (msgInfo) => {
-		// Save msginfo in chatlog
-		chatlog.push(msgInfo);
+		// Save msginfo in serverChatLog
+		serverChatLog.push(msgInfo);
+		console.log(serverChatLog);
 
 		socket.broadcast.emit('server distribute msg to all users', msgInfo);
 		socket.emit('server send me back my msg', msgInfo);
@@ -89,6 +90,10 @@ io.on('connection', (socket) => {
 
 		// // Send feedback to the user
 		// socket.emit('you have changed your name', newName);
+	});
+
+	socket.on('user request chat log', () => {
+		socket.emit('server sends serverChatLog', serverChatLog);
 	});
 });
 

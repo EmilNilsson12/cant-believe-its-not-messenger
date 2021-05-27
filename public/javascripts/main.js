@@ -1,5 +1,7 @@
-import { welcomeUserInChat } from './modules/welcomeMsgFromServer.js';
-import { changeMyName } from './modules/feedbackNameChange.js';
+import { printWelcomeMsgFromServer } from './modules/chatMsgs/printWelcomeMsgFromServer.js';
+import { printMyNameChanged } from './modules/chatMsgs/printMyNameChanged.js';
+import { printMsgFromMe } from './modules/chatMsgs/printMsgFromMe.js';
+import { printMsgFromOtherUser } from './modules/chatMsgs/printMsgFromOtherUser.js';
 
 import { otherUserHasJoined } from './socketsOn/otherUserHasJoined.js';
 import { otherUserHasLeft } from './socketsOn/otherUserHasLeft.js';
@@ -19,9 +21,24 @@ const chatInput = document.getElementById('chat-input');
 const yourNameForm = document.getElementById('form-change-name');
 const yourNameInput = document.getElementById('your-name');
 
+// Get chatlog from server
+socket.emit('user request chat log');
+
+// Fill chat history with chat log
+socket.on('server sends serverChatLog', (chatHistory) => {
+	console.table(chatHistory);
+	for (let msg in chatHistory) {
+		if (msg.user == thisClientLocalName) {
+			printMsgFromMe(msg, chatLog);
+		} else {
+			printMsgFromOtherUser(msg, chatLog);
+		}
+	}
+});
+
 // Always receieve from server when you enter the chat
 socket.on('you have joined', (newUser) => {
-	welcomeUserInChat(newUser, chatLog);
+	printWelcomeMsgFromServer(newUser, chatLog);
 
 	// Set localname of client to first 4 chars of socket.id
 	thisClientLocalName = newUser.screenName;
@@ -35,6 +52,9 @@ chatForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 
 	let msg = chatInput.value;
+
+	console.log('thisClientLocalName: ', thisClientLocalName);
+	console.log('msg: ', msg);
 
 	socket.emit('user send msg to server', {
 		content: msg,
@@ -55,7 +75,7 @@ yourNameForm.addEventListener('submit', (e) => {
 	thisClientLocalName = newName;
 
 	// Local feedback that the name is changed
-	changeMyName(newName, chatLog);
+	printMyNameChanged(newName, chatLog);
 
 	// Send new name to server
 	socket.emit('user change their name', {
