@@ -35,6 +35,7 @@ io.on('connection', (socket) => {
 	const newUser = {
 		id: socket.id,
 		name: 'Guest ' + totalClientsEver,
+		screenName: socket.id.slice(0, 4),
 	};
 
 	users.push(newUser);

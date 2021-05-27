@@ -20,7 +20,7 @@ socket.on('you have joined', (newUser) => {
 	welcomeUserInChat(newUser, chatLog);
 
 	// Set localname of client to first 4 chars of socket.id
-	thisClientLocalName = newUser.id.slice(0, 4);
+	thisClientLocalName = newUser.screenName;
 
 	// Add value to inputfield
 	yourNameInput.value = thisClientLocalName;
