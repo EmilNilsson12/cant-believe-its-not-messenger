@@ -8,7 +8,7 @@ import { serverSendMeBackMyMsg } from './socketsOn/serverSendMeBackMyMsg.js';
 const socket = io();
 console.log(socket);
 
-let thisClient;
+let thisClientLocalName;
 
 const chatLog = document.getElementById('chat-log');
 const chatForm = document.getElementById('chat-form');
@@ -19,11 +19,11 @@ const yourNameInput = document.getElementById('your-name');
 socket.on('you have joined', (newUser) => {
 	welcomeUserInChat(newUser, chatLog);
 
-	thisClient = newUser.id.slice(0, 4);
+	// Set localname of client to first 4 chars of socket.id
+	thisClientLocalName = newUser.id.slice(0, 4);
 
-	console.log('thisClient has joined');
-	console.log(thisClient);
-	yourNameInput.value = thisClient;
+	// Add value to inputfield
+	yourNameInput.value = thisClientLocalName;
 });
 
 // Send a msg to server
@@ -32,10 +32,10 @@ chatForm.addEventListener('submit', (e) => {
 
 	let msg = chatInput.value;
 
-	console.log('thisClient send msg');
-	console.log(thisClient);
-
-	socket.emit('user send msg to server', { content: msg, user: thisClient });
+	socket.emit('user send msg to server', {
+		content: msg,
+		user: thisClientLocalName,
+	});
 
 	chatInput.value = '';
 });
