@@ -21,9 +21,6 @@ const chatLog = document.getElementById('chat-log');
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
 
-const yourNameForm = document.getElementById('form-change-name');
-const yourNameInput = document.getElementById('your-name');
-
 // Fill chat history with chat log
 socket.on('server sends serverChatLog', (chatHistory) => {
 	for (let msg of chatHistory) {
@@ -85,26 +82,36 @@ chatForm.addEventListener('submit', (e) => {
 	chatInput.value = '';
 });
 
+const yourNameForm = document.getElementById('form-change-name');
+const yourNameInput = document.getElementById('your-name-input');
+
 // Change screenName
-yourNameForm.addEventListener('submit', (e) => {
+yourNameForm.addEventListener('submit', changeName);
+yourNameInput.addEventListener('blur', changeName);
+
+function changeName(e) {
 	e.preventDefault();
 
 	// Get new name
 	let newName = yourNameInput.value;
 
-	// Change my name locally
-	thisClientLocalName = newName;
-	localStorage.setItem('screenName', JSON.stringify(thisClientLocalName));
+	// Only update name if its different from previous name
+	if (newName != thisClientLocalName) {
+		// Change my name locally
+		thisClientLocalName = newName;
+		localStorage.setItem('screenName', JSON.stringify(thisClientLocalName));
 
-	// Local feedback that the name is changed
-	printMyNameChanged(newName, chatLog);
+		// Local feedback that the name is changed
+		printMyNameChanged(newName, chatLog);
+		scrollLatestMsgIntoView();
 
-	// Send new name to server
-	socket.emit('user change their name', {
-		newName: newName,
-		userId: socket.id,
-	});
-});
+		// Send new name to server
+		socket.emit('user change their name', {
+			newName: newName,
+			userId: socket.id,
+		});
+	}
+}
 
 /* --------- IO LISTENERS --------- */
 
