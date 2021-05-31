@@ -1,8 +1,6 @@
 import { printWelcomeMsgFromServer } from './modules/chatMsgs/printWelcomeMsgFromServer.js';
 import { printMyNameChanged } from './modules/chatMsgs/printMyNameChanged.js';
 import { printUserChangedName } from './modules/chatMsgs/printUserChangedName.js';
-import { printMsgFromMe } from './modules/chatMsgs/printMsgFromMe.js';
-import { printMsgFromOtherUser } from './modules/chatMsgs/printMsgFromOtherUser.js';
 
 import { otherUserHasJoined } from './socketsOn/otherUserHasJoined.js';
 import { otherUserHasLeft } from './socketsOn/otherUserHasLeft.js';
@@ -12,6 +10,8 @@ import { serverAnnounceNameChange } from './socketsOn/serverAnnounceNameChange.j
 
 import { sanitize } from './utils/sanitizeInput.js';
 import { scrollLatestMsgIntoView } from './utils/scrollLatestMsgIntoView.js';
+import { placeMyMsgInCorrectElement } from './utils/placeMyMsgInCorrectElement.js';
+import { placeOtheUsersMsgInCorrectElement } from './utils/placeOtheUsersMsgInCorrectElement.js';
 
 const socket = io();
 console.log(socket);
@@ -26,14 +26,13 @@ const chatInput = document.getElementById('chat-input');
 // Fill chat history with chat log
 socket.on('server sends serverChatLog', (chatHistory) => {
 	for (let msg of chatHistory) {
-		console.log('thisClientCookie: ', thisClientCookie);
-		if (msg.usersCookie == thisClientCookie) {
-			printMsgFromMe(msg, chatLog);
-		} else if (msg.user == 'bot') {
+		if (msg.user == 'bot') {
 			console.log(msg);
 			printUserChangedName(msg, chatLog);
+		} else if (msg.usersCookie == thisClientCookie) {
+			placeMyMsgInCorrectElement(msg, chatLog);
 		} else {
-			printMsgFromOtherUser(msg, chatLog);
+			placeOtheUsersMsgInCorrectElement(msg, chatLog);
 		}
 	}
 	// Welcomes user after eventual msg from log has been rendered
