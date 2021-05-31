@@ -35,26 +35,23 @@ socket.on('server sends serverChatLog', (chatHistory) => {
 
 // Always receieve from server when you enter the chat
 socket.on('you have joined', (user) => {
-	// Set localname of client to first 4 chars of socket.id
-	thisClientLocalName =
-		JSON.parse(localStorage.getItem('screenName')) || user.screenName;
-
-	// Add value to inputfield
-	yourNameInput.value =
-		JSON.parse(localStorage.getItem('screenName')) || thisClientLocalName;
-
 	let cookie = localStorage.getItem('cookie');
 	if (cookie == null) {
 		localStorage.setItem('cookie', JSON.stringify(user.cookie));
-		localStorage.setItem('screenName', JSON.stringify(thisClientLocalName));
+		localStorage.setItem('screenName', JSON.stringify(user.screenName));
 	} else {
-		socket.emit('user have visited before', {
-			prevCookie: JSON.parse(localStorage.getItem('cookie')),
+		socket.emit('user returns', {
 			currentId: socket.id,
+			prevCookie: JSON.parse(localStorage.getItem('cookie')),
 			screenName: JSON.parse(localStorage.getItem('screenName')),
 		});
+
+		// Update screenName for welcomeMsg
 		user.screenName = JSON.parse(localStorage.getItem('screenName'));
 	}
+
+	// Add value to inputfield
+	yourNameInput.value = JSON.parse(localStorage.getItem('screenName'));
 
 	console.log('user: ', user);
 	console.log('cookie: ', cookie);

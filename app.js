@@ -33,7 +33,10 @@ io.on('connection', (socket) => {
 	};
 
 	users.push(newUser);
-	console.log(users);
+
+	console.log('--------------------CURRENT users ONLINE--------------------');
+	console.table(users);
+	console.log('------------------------------------------------------------');
 
 	/* ------------ USER CONNECTS ---------- */
 	console.log('New client connected: ', socket.id);
@@ -41,11 +44,36 @@ io.on('connection', (socket) => {
 	totalClientsEver++;
 	console.log('Total clients connected: ', totalClients);
 
+	/* ------------------------------------------- */
+	/* ------------------------------------------- */
+	/* ----------- SOCKET.EMIT FUNCTIONS --------- */
+	/* ------------------------------------------- */
+	/* ------------------------------------------- */
+
+	/* ------------ EMIT TO USER AFTER ADDED TO USERS ARRAY ---------- */
+	socket.emit('you have joined', newUser);
+
+	/* ------------ SEND CHAT HISTORY TO NEWLY CONNECTED USER ---------- */
+	socket.emit('server sends serverChatLog', serverChatLog);
+
+	/* ------------------------------------------- */
+	/* ------------------------------------------- */
+	/* ------------ SOCKET.ON FUNCTIONS ---------- */
+	/* ------------------------------------------- */
+	/* ------------------------------------------- */
+
 	/* ------------ CONFIGURE RETURN USER ---------- */
-	socket.on('user have visited before', (returnUser) => {
+	socket.on('user returns', (returnUser) => {
 		// Update array of visitors to match the users local settings
-		users.find((user) => user.id == returnUser.currentId).screenName =
-			returnUser.screenName;
+		let theReturnUserOldInfo = users.find(
+			(user) => user.id == returnUser.currentId
+		);
+
+		// Update user in users array
+		theReturnUserOldInfo.screenName = returnUser.screenName;
+		theReturnUserOldInfo.cookie = returnUser.prevCookie;
+
+		console.table(users);
 	});
 
 	/* ------------ BROADCAST NEW USER TO ALL ---------- */
@@ -53,19 +81,15 @@ io.on('connection', (socket) => {
 		socket.broadcast.emit('user has joined', user);
 	});
 
-	/* ------------ WELCOME NEW USER TO SELF ---------- */
-	socket.emit('you have joined', newUser);
-
 	/* ------------ USER DISCONNECTS ---------- */
 	socket.on('disconnect', () => {
 		console.log('Client left: ', socket.id);
 		totalClients--;
 		console.log('Total clients connected: ', totalClients);
 
-		console.log(users);
 		users = users.filter((userDetails) => userDetails.id != socket.id);
-		console.log(users);
 
+		console.log(users);
 		socket.broadcast.emit('user has left', newUser);
 	});
 
@@ -100,9 +124,6 @@ io.on('connection', (socket) => {
 		// // Send feedback to the user
 		// socket.emit('you have changed your name', newName);
 	});
-
-	// SEND CHAT HISTORY TO NEWLY CONNECTED USER
-	socket.emit('server sends serverChatLog', serverChatLog);
 });
 
 module.exports = {
