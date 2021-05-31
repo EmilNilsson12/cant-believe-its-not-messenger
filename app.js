@@ -115,6 +115,14 @@ io.on('connection', (socket) => {
 		// Overwrite old name in users array
 		users.find((user) => user.id == userId).screenName = newName;
 
+		// Save msginfo in serverChatLog
+		serverChatLog.push({
+			user: 'bot',
+			oldName: oldName,
+			newName: newName,
+		});
+		console.log(serverChatLog);
+
 		// Emit the change to all other users
 		socket.broadcast.emit('another user has changed their name', {
 			oldName,

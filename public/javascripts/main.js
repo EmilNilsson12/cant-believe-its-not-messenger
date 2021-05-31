@@ -1,5 +1,6 @@
 import { printWelcomeMsgFromServer } from './modules/chatMsgs/printWelcomeMsgFromServer.js';
 import { printMyNameChanged } from './modules/chatMsgs/printMyNameChanged.js';
+import { printUserChangedName } from './modules/chatMsgs/printUserChangedName.js';
 import { printMsgFromMe } from './modules/chatMsgs/printMsgFromMe.js';
 import { printMsgFromOtherUser } from './modules/chatMsgs/printMsgFromOtherUser.js';
 
@@ -25,12 +26,18 @@ const chatInput = document.getElementById('chat-input');
 // Fill chat history with chat log
 socket.on('server sends serverChatLog', (chatHistory) => {
 	for (let msg of chatHistory) {
+		console.log('thisClientCookie: ', thisClientCookie);
 		if (msg.usersCookie == thisClientCookie) {
 			printMsgFromMe(msg, chatLog);
+		} else if (msg.user == 'bot') {
+			console.log(msg);
+			printUserChangedName(msg, chatLog);
 		} else {
 			printMsgFromOtherUser(msg, chatLog);
 		}
 	}
+	// Welcomes user after eventual msg from log has been rendered
+	printWelcomeMsgFromServer(thisClientLocalName, chatLog);
 	scrollLatestMsgIntoView();
 });
 
@@ -53,8 +60,6 @@ socket.on('you have joined', (user) => {
 
 	// Add value to inputfield
 	yourNameInput.value = JSON.parse(localStorage.getItem('screenName'));
-
-	printWelcomeMsgFromServer(thisClientLocalName, chatLog);
 
 	socket.emit('user joins', thisClientLocalName);
 });
