@@ -1,5 +1,11 @@
 function printUserJoinedMsg(screenName, chatLog) {
-	chatLog.insertAdjacentHTML('beforeend', `<li>${screenName} has joined</li>`);
+	chatLog.insertAdjacentHTML(
+		'beforeend',
+		`
+		<div>
+			<li>${screenName} has joined</li>
+		</div>`
+	);
 }
 
 export { printUserJoinedMsg };
