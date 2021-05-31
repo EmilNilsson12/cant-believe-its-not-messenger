@@ -127,7 +127,7 @@ otherUserHasLeft(socket, chatLog);
 serverDistributeMsgToAllUsers(socket, chatLog);
 
 // Listen for messages from me
-serverSendMeBackMyMsg(socket, chatLog);
+serverSendMeBackMyMsg(socket, chatLog, thisClientLocalName);
 
 // Listen for other user changes name
 serverAnnounceNameChange(socket, chatLog);
