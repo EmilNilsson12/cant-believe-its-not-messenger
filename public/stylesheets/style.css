@@ -8,31 +8,57 @@
 
 li {
 	width: 100%;
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
 	padding: 5px;
 }
 
+.msg-group {
+	color: white;
+}
+
 .msg-from-me {
-	/* float: right; */
 	text-align: right;
 
-	color: white;
 	background-color: blue;
 }
 
-.msg-from-me {
-	border-radius: 10px;
+.msg-group {
+	/* border: 1px solid black; */
+	margin-bottom: 5px;
 }
 
-.msg-from-me ~ .msg-from-me {
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
+/* .msg-from-me {
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+} */
+
+.msg-from-me,
+.msg-from-others-li {
+	border-bottom: 1px solid black;
+}
+
+.msg-from-me:first-child {
+	border-top-right-radius: 10px;
+}
+
+.msg-from-me:last-child {
+	border-bottom-right-radius: 10px;
+	border-bottom: none;
 }
 
 .msg-from-others-li {
 	text-align: left;
-	color: white;
 	background-color: purple;
+}
+
+.msg-from-others-li:first-child {
+	border-top-left-radius: 10px;
+}
+
+.msg-from-others-li:last-child {
+	border-bottom-left-radius: 10px;
+	border-bottom: none;
 }
 
 .msg-from-others-username {
