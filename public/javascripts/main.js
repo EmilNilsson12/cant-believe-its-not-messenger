@@ -16,6 +16,7 @@ const socket = io();
 console.log(socket);
 
 let thisClientLocalName;
+let thisClientCookie;
 
 const chatLog = document.getElementById('chat-log');
 const chatForm = document.getElementById('chat-form');
@@ -45,19 +46,17 @@ socket.on('you have joined', (user) => {
 			prevCookie: JSON.parse(localStorage.getItem('cookie')),
 			screenName: JSON.parse(localStorage.getItem('screenName')),
 		});
-
-		// Update screenName for welcomeMsg
-		user.screenName = JSON.parse(localStorage.getItem('screenName'));
 	}
+	// Set local var
+	thisClientCookie = JSON.parse(localStorage.getItem('cookie'));
+	thisClientLocalName = JSON.parse(localStorage.getItem('screenName'));
 
 	// Add value to inputfield
 	yourNameInput.value = JSON.parse(localStorage.getItem('screenName'));
 
-	console.log('user: ', user);
-	console.log('cookie: ', cookie);
-	printWelcomeMsgFromServer(user, chatLog);
+	printWelcomeMsgFromServer(thisClientLocalName, chatLog);
 
-	socket.emit('user joins', user);
+	socket.emit('user joins', thisClientLocalName);
 });
 
 // Send a msg to server
@@ -74,6 +73,7 @@ chatForm.addEventListener('submit', (e) => {
 	socket.emit('user send msg to server', {
 		content: msg,
 		user: thisClientLocalName,
+		usersCookie: thisClientCookie,
 	});
 
 	chatInput.value = '';

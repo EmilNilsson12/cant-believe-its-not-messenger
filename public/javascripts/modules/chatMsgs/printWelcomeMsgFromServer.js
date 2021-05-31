@@ -1,7 +1,7 @@
-function printWelcomeMsgFromServer(newUser, chatLog) {
+function printWelcomeMsgFromServer(screenName, chatLog) {
 	chatLog.insertAdjacentHTML(
 		'beforeend',
-		`<li>Welcome! You are user: ${newUser.screenName}</li>`
+		`<li>Welcome! You are user: ${screenName}</li>`
 	);
 }
 
