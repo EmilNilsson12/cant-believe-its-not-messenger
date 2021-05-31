@@ -75,7 +75,7 @@ chatForm.addEventListener('submit', (e) => {
 		user: thisClientLocalName,
 		usersCookie: thisClientCookie,
 	});
-
+	chatInput.focus();
 	chatInput.value = '';
 });
 
