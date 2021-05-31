@@ -25,7 +25,7 @@ const chatInput = document.getElementById('chat-input');
 // Fill chat history with chat log
 socket.on('server sends serverChatLog', (chatHistory) => {
 	for (let msg of chatHistory) {
-		if (msg.user == thisClientLocalName) {
+		if (msg.usersCookie == thisClientCookie) {
 			printMsgFromMe(msg, chatLog);
 		} else {
 			printMsgFromOtherUser(msg, chatLog);
