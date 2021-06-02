@@ -69,8 +69,6 @@ chatForm.addEventListener('submit', (e) => {
 
 	let msg = chatInput.value;
 
-	console.log('thisClientLocalName: ', thisClientLocalName);
-
 	// Prevents user from writing HTML as msg - XSS
 	msg = sanitize(msg);
 
