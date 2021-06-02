@@ -2,10 +2,15 @@ import { printMsgFromOtherUserSameGroup } from '../modules/chatMsgs/printMsgFrom
 import { printMsgFromOtherUser } from '../modules/chatMsgs/printMsgFromOtherUser.js';
 function placeOtheUsersMsgInCorrectElement(msg, chatLog) {
 	let divsInChatLog = document.querySelectorAll('ul > div');
+	let previousMsgsExists = divsInChatLog.length > 0;
 
-	let latestMsgGroup = divsInChatLog[divsInChatLog.length - 1];
-	let islatestMsgGroupOwner =
-		latestMsgGroup.dataset.sender == msg.user || false;
+	let islatestMsgGroupOwner = false;
+	let latestMsgGroup;
+
+	if (previousMsgsExists) {
+		latestMsgGroup = divsInChatLog[divsInChatLog.length - 1];
+		islatestMsgGroupOwner = latestMsgGroup.dataset.sender == msg.user;
+	}
 
 	// If latest msg was from the same user
 	// add the new message inside the same group of msgs
