@@ -3,7 +3,7 @@ function printUserJoinedMsg(screenName, chatLog) {
 		'beforeend',
 		`
 		<div>
-			<li>${screenName} has joined</li>
+			<li class="chat-msg">${screenName} has joined</li>
 		</div>`
 	);
 }
