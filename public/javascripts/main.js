@@ -4,6 +4,7 @@ import { printUserChangedName } from './modules/chatMsgs/printUserChangedName.js
 
 import { addMeToOnlineList } from './modules/usersList/addMeToOnlineList.js';
 import { addUserToOnlineList } from './modules/usersList/addUserToOnlineList.js';
+import { updateMyName } from './modules/usersList/updateMyName.js';
 
 import { otherUserHasJoined } from './socketsOn/otherUserHasJoined.js';
 import { otherUserHasLeft } from './socketsOn/otherUserHasLeft.js';
@@ -108,6 +109,9 @@ yourNameInput.addEventListener('blur', changeName);
 function changeName(e) {
 	e.preventDefault();
 
+	// Save old name
+	let oldName = thisClientLocalName;
+
 	// Get new name
 	let newName = yourNameInput.value;
 
@@ -119,6 +123,7 @@ function changeName(e) {
 
 		// Local feedback that the name is changed
 		printMyNameChanged(newName, chatLog);
+		updateMyName({ oldName, newName }, onlineList);
 		scrollLatestMsgIntoView();
 
 		// Send new name to server
