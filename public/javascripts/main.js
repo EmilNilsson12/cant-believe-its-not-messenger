@@ -2,6 +2,9 @@ import { printWelcomeMsgFromServer } from './modules/chatMsgs/printWelcomeMsgFro
 import { printMyNameChanged } from './modules/chatMsgs/printMyNameChanged.js';
 import { printUserChangedName } from './modules/chatMsgs/printUserChangedName.js';
 
+import { addMeToOnlineList } from './modules/usersList/addMeToOnlineList.js';
+import { addUserToOnlineList } from './modules/usersList/addUserToOnlineList.js';
+
 import { otherUserHasJoined } from './socketsOn/otherUserHasJoined.js';
 import { otherUserHasLeft } from './socketsOn/otherUserHasLeft.js';
 import { serverDistributeMsgToAllUsers } from './socketsOn/serverDistributeMsgToAllUsers.js';
@@ -23,6 +26,8 @@ const chatLog = document.getElementById('chat-log');
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
 
+const onlineList = document.getElementById('users-currently-online');
+
 // Fill chat history with chat log
 socket.on('server sends serverChatLog', (chatHistory) => {
 	for (let msg of chatHistory) {
@@ -38,6 +43,17 @@ socket.on('server sends serverChatLog', (chatHistory) => {
 	// Welcomes user after eventual msg from log has been rendered
 	printWelcomeMsgFromServer(thisClientLocalName, chatLog);
 	scrollLatestMsgIntoView();
+});
+
+// Fill chat history with chat log
+socket.on('server sends currentUsers', (users) => {
+	for (let user of users) {
+		if (user.screenName == thisClientLocalName) {
+			addMeToOnlineList(user.screenName, onlineList);
+		} else {
+			addUserToOnlineList(user.screenName, onlineList);
+		}
+	}
 });
 
 // Always receieve from server when you enter the chat
@@ -60,6 +76,7 @@ socket.on('you have joined', (user) => {
 	// Add value to inputfield
 	yourNameInput.value = JSON.parse(localStorage.getItem('screenName'));
 
+	// Tell server to broadcast that I've joined
 	socket.emit('user joins', thisClientLocalName);
 });
 
@@ -115,16 +132,16 @@ function changeName(e) {
 /* --------- IO LISTENERS --------- */
 
 // Listen for other users joining
-otherUserHasJoined(socket, chatLog);
+otherUserHasJoined(socket, chatLog, onlineList);
 
 // Listen for other users leaving
-otherUserHasLeft(socket, chatLog);
+otherUserHasLeft(socket, chatLog, onlineList);
 
-// Listen for messages from others
-serverDistributeMsgToAllUsers(socket, chatLog);
+// Listen for other user changes name
+serverAnnounceNameChange(socket, chatLog, onlineList);
 
 // Listen for messages from me
 serverSendMeBackMyMsg(socket, chatLog, thisClientLocalName);
 
-// Listen for other user changes name
-serverAnnounceNameChange(socket, chatLog);
+// Listen for messages from others
+serverDistributeMsgToAllUsers(socket, chatLog);

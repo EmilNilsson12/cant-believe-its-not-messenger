@@ -13,18 +13,27 @@
 				<input type="submit" value="Change name" />
 			</form>
 		</h2>
-		<ul id="chat-log"></ul>
 
-		<form id="chat-form">
-			<input
-				type="text"
-				name="msg"
-				id="chat-input"
-				autocomplete="off"
-				required
-			/>
-			<input type="submit" value="Send" />
-		</form>
+		<main>
+			<div id="main-left-column">
+				<ul id="chat-log"></ul>
+				<form id="chat-form">
+					<input
+						type="text"
+						name="msg"
+						id="chat-input"
+						autocomplete="off"
+						required
+					/>
+					<input type="submit" value="Send" />
+				</form>
+			</div>
+
+			<div id="main-right-column">
+				<h2>Users currently online</h2>
+				<ul id="users-currently-online"></ul>
+			</div>
+		</main>
 	</body>
 	<script src="socket.io/socket.io.js"></script>
 	<script type="module" src="javascripts/main.js"></script>
