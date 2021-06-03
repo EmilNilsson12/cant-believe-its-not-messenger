@@ -116,7 +116,7 @@ function changeName(e) {
 	let newName = yourNameInput.value;
 
 	// Only update name if its different from previous name
-	if (newName != thisClientLocalName) {
+	if (newName != thisClientLocalName && newName != '') {
 		// Change my name locally
 		thisClientLocalName = newName;
 		localStorage.setItem('screenName', JSON.stringify(thisClientLocalName));
