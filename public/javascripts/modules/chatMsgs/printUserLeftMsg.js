@@ -1,8 +1,8 @@
-function printUserLeftMsg(newUser, chatLog) {
+function printUserLeftMsg(screenName, chatLog) {
 	chatLog.insertAdjacentHTML(
 		'beforeend',
 		`<div>
-			<li>${newUser.screenName} has left</li>
+			<li class="chat-msg">${screenName} has left</li>
 		</div>`
 	);
 }

@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
 	/* ------------ BROADCAST NEW USER TO ALL ---------- */
 	socket.on('user joins', (user) => {
 		socket.broadcast.emit('user has joined', user);
+		socket.emit('server sends currentUsers', users);
 	});
 
 	/* ------------ USER DISCONNECTS ---------- */
@@ -90,7 +91,7 @@ io.on('connection', (socket) => {
 		users = users.filter((userDetails) => userDetails.id != socket.id);
 
 		console.log(users);
-		socket.broadcast.emit('user has left', newUser);
+		socket.broadcast.emit('user has left', newUser.screenName);
 	});
 
 	/* ------------ A USER SENDS A CHAT-MSG ---------- */
