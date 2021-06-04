@@ -4,12 +4,15 @@
 	color: $pure-black-color;
 	border-radius: 10px;
 	padding: 10px;
-	margin-bottom: 60px;
+	margin-bottom: 100px;
 	margin-left: 50px;
 
 	box-shadow: 0 0 75px -20px white;
 
 	h2 {
+		color: $main-color-text;
+		letter-spacing: 1px;
+		text-transform: uppercase;
 		font-family: 'Limelight', cursive;
 		text-shadow: 0 0 15px white, 2px 2px 3px black;
 	}
