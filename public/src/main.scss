@@ -1,0 +1,21 @@
+@import 'colors';
+@import 'mixins';
+@import 'header';
+@import 'chat';
+@import 'userlist';
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	background-color: $main-color;
+}
+
+main {
+	display: flex;
+	margin: 0 auto;
+	width: 60%;
+	height: 600px;
+}
+
+#formChangeName {
+	display: inline;
+}

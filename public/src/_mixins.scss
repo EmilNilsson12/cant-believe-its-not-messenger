@@ -1,0 +1,11 @@
+@mixin input-rounded {
+	border-color: $main-color-text;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+}
+
+@mixin hover-submit {
+	color: $main-color-text;
+	background-color: $secondary-color-text;
+}

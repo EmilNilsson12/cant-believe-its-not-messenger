@@ -1,18 +1,25 @@
 <html>
 	<head>
-		<title>Express</title>
-		<link rel="stylesheet" href="/stylesheets/style.css" />
+		<title>I can't believe it's not messenger</title>
+
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Limelight&family=Montserrat:wght@200&family=Satisfy&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link rel="stylesheet" href="./dist/css/style.css" />
 	</head>
 
 	<body>
-		<h1>THE CHAT FOR COOL KIDS</h1>
-		<h2>
-			Welcome to the chatroom
+		<header>
+			<h1>I can't believe it's not <span id="messenger">Messenger</span></h1>
+			<h2>Welcome to the chatroom</h2>
 			<form id="form-change-name">
 				<input type="text" id="your-name-input" name="newName" required />
 				<input type="submit" value="Change name" />
 			</form>
-		</h2>
+		</header>
 
 		<main>
 			<div id="main-left-column">
@@ -23,6 +30,7 @@
 						name="msg"
 						id="chat-input"
 						autocomplete="off"
+						placeholder="Say a little something about yourself..."
 						required
 					/>
 					<input type="submit" value="Send" />

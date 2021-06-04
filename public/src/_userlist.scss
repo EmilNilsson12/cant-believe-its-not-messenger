@@ -1,0 +1,44 @@
+#main-right-column {
+	align-self: stretch;
+	background-color: $secondary-color;
+	color: $pure-black-color;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 100px;
+	margin-left: 50px;
+
+	box-shadow: 0 0 75px -20px white;
+
+	h2 {
+		color: $main-color-text;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		font-family: 'Limelight', cursive;
+		text-shadow: 0 0 15px white, 2px 2px 3px black;
+	}
+}
+
+#users-currently-online {
+	list-style: none;
+	padding-left: 0;
+	background-color: lightcyan;
+	font-weight: bold;
+}
+
+#users-currently-online li {
+	background-color: #0000ff4d;
+	border-bottom: 1px solid chartreuse;
+	padding: 5px 10px;
+}
+
+#users-currently-online li:last-child {
+	border-bottom: none;
+}
+
+#users-currently-online li#your-name {
+	background-color: rgba(0, 0, 255, 0.575);
+}
+
+#your-name:after {
+	content: ' (You)';
+}

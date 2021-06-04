@@ -131,6 +131,8 @@ function changeName(e) {
 			newName: newName,
 			userId: socket.id,
 		});
+
+		yourNameInput.blur();
 	}
 }
 
