@@ -1,0 +1,35 @@
+#main-right-column {
+	align-self: stretch;
+	background-color: $secondary-color;
+	color: $main-color;
+	border-radius: 10px;
+	padding: 10px;
+
+	h2 {
+		font-family: 'Limelight', cursive;
+	}
+}
+
+#users-currently-online {
+	list-style: none;
+	padding-left: 0;
+	background-color: lightcyan;
+}
+
+#users-currently-online li {
+	background-color: rgba(0, 0, 255, 0.301);
+	border-bottom: 1px solid chartreuse;
+	padding: 5px 10px;
+}
+
+#users-currently-online li:last-child {
+	border-bottom: none;
+}
+
+#users-currently-online li#your-name {
+	background-color: rgba(0, 0, 255, 0.575);
+}
+
+#your-name:after {
+	content: ' (You)';
+}
