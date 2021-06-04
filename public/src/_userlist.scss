@@ -1,12 +1,17 @@
 #main-right-column {
 	align-self: stretch;
 	background-color: $secondary-color;
-	color: $main-color;
+	color: $pure-black-color;
 	border-radius: 10px;
 	padding: 10px;
+	margin-bottom: 20px;
+	margin-left: 50px;
+
+	box-shadow: 0 0 75px -20px white;
 
 	h2 {
 		font-family: 'Limelight', cursive;
+		text-shadow: 0 0 15px white, 2px 2px 3px black;
 	}
 }
 
@@ -14,10 +19,11 @@
 	list-style: none;
 	padding-left: 0;
 	background-color: lightcyan;
+	font-weight: bold;
 }
 
 #users-currently-online li {
-	background-color: rgba(0, 0, 255, 0.301);
+	background-color: #0000ff4d;
 	border-bottom: 1px solid chartreuse;
 	padding: 5px 10px;
 }

@@ -1,4 +1,5 @@
 @import 'colors';
+@import 'mixins';
 @import 'header';
 @import 'chat';
 @import 'userlist';
@@ -10,13 +11,8 @@ body {
 
 main {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
 	margin: 0 auto;
-
-	max-width: 80%;
-	width: 50%;
+	width: 60%;
 }
 
 #formChangeName {

@@ -1,10 +1,51 @@
 header {
 	// background-color: green;
 	text-align: center;
-	font-family: 'Limelight', cursive;
+	// font-family: 'Limelight', cursive;
 	color: $main-color-text;
 
 	h1 {
-		text-transform: uppercase;
+		text-transform: capitalize;
+		font-family: 'Satisfy', cursive;
+
+		#messenger {
+			display: inline-block;
+			color: $ternary-color-text;
+			font-family: 'Montserrat', sans-serif;
+			transform: translateY(3px);
+		}
+	}
+
+	#form-change-name {
+		input {
+			@include input-rounded;
+
+			&[type='submit'] {
+				&:hover {
+					@include hover-submit;
+				}
+			}
+
+			&#your-name-input {
+				color: $pure-black-color;
+				background-color: $secondary-color-text;
+				&:hover {
+					width: 120px;
+					transition: width 0.25s ease-out;
+				}
+
+				&:focus {
+					color: $main-color;
+					background-color: $main-color-text;
+					width: 200px;
+					transition: width 0.25s ease-in;
+				}
+
+				&:not(:focus) {
+					width: 100px;
+					transition: width 0.25s ease-out;
+				}
+			}
+		}
 	}
 }
