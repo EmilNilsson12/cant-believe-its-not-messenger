@@ -46,7 +46,6 @@ header #form-change-name input#your-name-input:not(:focus) {
   display: flex;
   flex-direction: column;
 }
-#main-left-column ul,
 #main-left-column form {
   margin: 0;
 }
@@ -64,6 +63,7 @@ header #form-change-name input#your-name-input:not(:focus) {
   color: black;
   background-color: #a8a8a8;
   transition: background-color 0.25s ease-in;
+  width: 300px;
 }
 #main-left-column input#chat-input:focus {
   background-color: #fff;
@@ -73,11 +73,13 @@ header #form-change-name input#your-name-input:not(:focus) {
 #chat-log {
   height: 300px;
   list-style-type: none;
-  padding: 5px 10px;
   background-color: lemonchiffon;
   overflow-y: scroll;
   box-shadow: 0px 0 75px -40px red;
   border-radius: 15px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 5px 10px;
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -143,7 +145,7 @@ li.chat-msg {
   color: black;
   border-radius: 10px;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
   margin-left: 50px;
   box-shadow: 0 0 75px -20px white;
 }
