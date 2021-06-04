@@ -3,8 +3,10 @@ header {
   color: #fff;
 }
 header h1 {
+  margin-top: 50px;
   text-transform: capitalize;
   font-family: "Satisfy", cursive;
+  font-size: xxx-large;
 }
 header h1 #messenger {
   display: inline-block;

@@ -3,8 +3,10 @@ header {
 	color: $main-color-text;
 
 	h1 {
+		margin-top: 50px;
 		text-transform: capitalize;
 		font-family: 'Satisfy', cursive;
+		font-size: xxx-large;
 
 		#messenger {
 			display: inline-block;
