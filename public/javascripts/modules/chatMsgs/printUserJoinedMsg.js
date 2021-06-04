@@ -2,7 +2,7 @@ function printUserJoinedMsg(screenName, chatLog) {
 	chatLog.insertAdjacentHTML(
 		'beforeend',
 		`<div>
-			<li class="chat-msg">${screenName} has joined</li>
+			<li class="chat-msg bot">${screenName} has joined</li>
 		</div>`
 	);
 }

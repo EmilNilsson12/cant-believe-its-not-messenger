@@ -95,6 +95,9 @@ li.chat-msg {
   padding: 5px 20px;
   margin-bottom: 3px;
 }
+li.chat-msg.bot:before {
+  content: "Bot: ";
+}
 
 .msg-group {
   color: #fff;

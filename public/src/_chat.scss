@@ -59,6 +59,10 @@ $chat-bubble-radius: 15px;
 li.chat-msg {
 	padding: 5px 20px;
 	margin-bottom: 3px;
+
+	&.bot:before {
+		content: 'Bot: ';
+	}
 }
 
 .msg-group {
