@@ -3,6 +3,8 @@
 This repo contains an app that lets multiple users chat using socket.io.
 The app mimics the behaviour you would expect from a group-chat in Facebook Messenger.
 
+Test the app here: https://unamed-socket-app.herokuapp.com
+
 ## Main features
 1. Sending multiple messages without interruption styles them in a way that shows they are related
 2. Name changes are announced in the chat and next to the users name in the "Users currently online" list as they happen
