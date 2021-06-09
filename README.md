@@ -1,4 +1,4 @@
-# unnamed-socket-app
+# I can't believe it's not messenger
 
 This repo contains an app that lets multiple users chat using socket.io.
 The app mimics the behaviour you would expect from a group-chat in Facebook Messenger.
